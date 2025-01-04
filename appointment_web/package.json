@@ -11,10 +11,12 @@
     "react-dom": "^19.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "webpack-dev-server": "webpack-dev-server",
+    "dev": "webpack-dev-server --mode=development",
+    "prod": "webpack --mode=production"
   },
   "eslintConfig": {
     "extends": [
@@ -38,9 +40,12 @@
     "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.25.9",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@babel/plugin-proposal-throw-expressions": "^7.25.9",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
+    "css-loader": "^7.1.2",
+    "dotenv-webpack": "^8.1.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
@@ -49,7 +54,14 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "postcss": "^8.4.49",
+    "postcss-loader": "^8.1.1",
     "prettier": "^3.4.2",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "sass": "^1.83.1",
+    "sass-loader": "^16.0.4",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
   }
 }
