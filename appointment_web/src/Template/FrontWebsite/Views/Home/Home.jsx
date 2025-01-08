@@ -9,9 +9,16 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Header from 'Template/FrontWebsite/Components/Header.jsx';
+import Banner from 'Template/FrontWebsite/Views/Home/Sections/Banner.jsx';
 export default function Home() {
   return (
-    <Box>
+    <React.Fragment>
+      <Header/>
+      <Banner/>
+
+<Box>
+
         <Typography variant='h1'>Home</Typography>
         <Button variant="text" >Text</Button>
       <Button variant="contained" >Contained</Button>
@@ -59,5 +66,7 @@ export default function Home() {
         </Toolbar>
       </AppBar>
     </Box>
+    </React.Fragment>
+    
   );
 }
