@@ -11,11 +11,15 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Header from 'Template/FrontWebsite/Components/Header.jsx';
 import Banner from 'Template/FrontWebsite/Views/Home/Sections/Banner.jsx';
+import Office from './Sections/Office.jsx';
+import HostelDesign from './Sections/Hostel.jsx';
 export default function Home() {
   return (
     <React.Fragment>
       <Header/>
       <Banner/>
+      <Office/>
+      <HostelDesign/>
 
 <Box>
 

@@ -9,6 +9,8 @@ import {
   CardContent,
   CardMedia,
   InputAdornment,
+  Grid2,
+  Grid,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -67,13 +69,25 @@ const categories = [
   },
   {
     id: 9,
-    title: "Government Office",
+    title: "Food Caterings",
     image:
       "https://img.freepik.com/free-photo/government-office-building_1150-3244.jpg?t=st=1736353312~exp=1736354912~hmac=4a8a5d28700e5f3e6a0ac17b5b6fd3997984b98d09a34e3e52f516da31ad4be4&w=900",
   },
   {
     id: 10,
     title: "Schools",
+    image:
+      "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
+  },
+  {
+    id: 11,
+    title: "Fashion Design",
+    image:
+      "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
+  },
+  {
+    id: 12,
+    title: "Teachers Appointments",
     image:
       "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
   },
@@ -188,7 +202,7 @@ export default function UniqueSearchAndCategories() {
             mt: 6,
             mb: 2,
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -199,11 +213,81 @@ export default function UniqueSearchAndCategories() {
           >
             Browse Categories
           </Typography>
-          <Button variant="text">See More</Button>
+          {/* <Button variant="text">See More</Button> */}
         </Box>
+        <Grid container spacing={4}>
+          {categories.map((category, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+              <Box
+        // onClick={() => handleCategoryClick(category)}
+        sx={{
+          textAlign: "center",
+          padding: "10px",
+          cursor: "pointer",
+          "&:hover": {
+            transform: "scale(1.05)", // Scale up the box
+            boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)", // Add shadow on hover
+            transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
+          },
+        }}
+      >
+        <Box
+          sx={{
+            position: "relative",
+            width: "120px",
+            height: "120px",
+            margin: "0 auto",
+            borderRadius: "50%",
+            overflow: "hidden",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            "&:hover::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.4)", // Dark overlay
+              zIndex: 1,
+            },
+          }}
+        >
+          <Box
+            component="img"
+            src={category.image}
+            alt={category.title}
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.3s ease",
+              "&:hover": {
+                transform: "scale(1.1)", // Zoom image on hover
+              },
+            }}
+          />
+        </Box>
+        <Typography
+          variant="body1"
+          mt={2}
+          sx={{
+            fontWeight: "bold",
+            color: "#333",
+            transition: "color 0.3s ease",
+            "&:hover": {
+              color: "#FF5722", // Change text color on hover
+            },
+          }}
+        >
+          {category.title}
+        </Typography>
+      </Box>
+            </Grid>
+          ))}
+        </Grid>
 
         {/* Slider Section */}
-        <Slide responsive={responsiveSettings} indicators={true}>
+        {/* <Slide responsive={responsiveSettings} indicators={true}>
           {categories.map((category) => (
             <Card
               key={category.id}
@@ -249,7 +333,7 @@ export default function UniqueSearchAndCategories() {
               </CardContent>
             </Card>
           ))}
-        </Slide>
+        </Slide> */}
       </Container>
     </Box>
   );
