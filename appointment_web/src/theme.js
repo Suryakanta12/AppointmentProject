@@ -6,7 +6,7 @@ const lightTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#3498db', // Bright blue
+            main: '#FF671F', // Bright orange
         },
         secondary: {
             main: '#2ecc71', // Green
@@ -28,6 +28,10 @@ const lightTheme = createTheme({
         card: {
             background: '#ffffff', // White card background
             shadow: '#d0d3d4', // Light gray shadow
+        },
+        button:{
+            primary: '#FF671F',
+            secondary: '#2ecc71',
         },
         error: {
             main: '#e74c3c', // Red for errors
@@ -82,7 +86,7 @@ const darkTheme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#3498db', // Blue
+            main: '#FF671F', // Blue
         },
         secondary: {
             main: '#2ecc71', // Green

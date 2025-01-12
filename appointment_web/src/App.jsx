@@ -23,12 +23,6 @@ export default function App(props) {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <MainRoutes />
-      <button onClick={() => {
-                      darkMode
-                        ? themeMode.dispatch({ type: "LIGHTMODE" })
-                        : themeMode.dispatch({ type: "DARKMODE" });
-                    }}>Toggle Theme</button>
-      <h1>{darkMode === 'light' ? 'Light Mode' : 'Dark Mode'}</h1>
     </ThemeProvider>
   );
 }

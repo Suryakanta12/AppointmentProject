@@ -272,7 +272,6 @@ export default function UniqueSearchAndCategories() {
           mt={2}
           sx={{
             fontWeight: "bold",
-            color: "#333",
             transition: "color 0.3s ease",
             "&:hover": {
               color: "#FF5722", // Change text color on hover

@@ -1,122 +1,110 @@
 import React from "react";
-import { Box, Typography, IconButton } from "@mui/material";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import {
+  Box,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Container,
+} from "@mui/material";
 
-const foodData = [
-  { name: "Biryani", image: "https://via.placeholder.com/150?text=Biryani" },
-  { name: "Pizza", image: "https://via.placeholder.com/150?text=Pizza" },
-  { name: "North Indian", image: "https://via.placeholder.com/150?text=North+Indian" },
-  { name: "Rolls", image: "https://via.placeholder.com/150?text=Rolls" },
-  { name: "Burger", image: "https://via.placeholder.com/150?text=Burger" },
-  { name: "Chinese", image: "https://via.placeholder.com/150?text=Chinese" },
-  { name: "Cake", image: "https://via.placeholder.com/150?text=Cake" },
-  { name: "Shawarma", image: "https://via.placeholder.com/150?text=Shawarma" },
-  { name: "Noodles", image: "https://via.placeholder.com/150?text=Noodles" },
-  { name: "Dosa", image: "https://via.placeholder.com/150?text=Dosa" },
-  { name: "Chole Bhature", image: "https://via.placeholder.com/150?text=Chole+Bhature" },
-  { name: "Kebab", image: "https://via.placeholder.com/150?text=Kebab" },
-  { name: "Pastry", image: "https://via.placeholder.com/150?text=Pastry" },
-  { name: "South Indian", image: "https://via.placeholder.com/150?text=South+Indian" },
-];
-
-const NextArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <IconButton
-      sx={{
-        position: "absolute",
-        top: "50%",
-        right: "10px",
-        zIndex: 1,
-        transform: "translateY(-50%)",
-        backgroundColor: "#fff",
-        ":hover": { backgroundColor: "#f5f5f5" },
-      }}
-      onClick={onClick}
-    >
-      <ArrowForwardIosIcon />
-    </IconButton>
-  );
-};
-
-const PrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <IconButton
-      sx={{
-        position: "absolute",
-        top: "50%",
-        left: "10px",
-        zIndex: 1,
-        transform: "translateY(-50%)",
-        backgroundColor: "#fff",
-        ":hover": { backgroundColor: "#f5f5f5" },
-      }}
-      onClick={onClick}
-    >
-      <ArrowBackIosIcon />
-    </IconButton>
-  );
-};
-
-const HostelDesign = () => {
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 4 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 480,
-        settings: { slidesToShow: 1 },
-      },
-    ],
-  };
+const Hostel = () => {
+  // Hostel data
+  const hostels = [
+    {
+      type: "Boys Hostel",
+      image:
+        "https://img.freepik.com/free-photo/focused-young-employees-waiting-meeting-beginning_1262-14934.jpg?t=st=1736689772~exp=1736693372~hmac=304b84b60a08173453f43820d7a983321a06a7083e12aa2088ee100d4bc21013&w=996",
+      description:
+        "A well-furnished hostel for boys with all modern amenities.",
+    },
+    {
+      type: "Women Hostel",
+      image:
+        "https://img.freepik.com/free-photo/roommates-sharing-happy-moments-together_23-2149112089.jpg?t=st=1736689862~exp=1736693462~hmac=9ed6b47c1d0cf92cea1284b3625d5ff03e11a388bc88fd9dfb8dcaeb46a19a65&w=996",
+      description: "A secure and comfortable hostel for women students.",
+    },
+  ];
 
   return (
-    <Box sx={{ maxWidth: "1200px", margin: "0 auto", padding: "20px" }}>
-      <Typography variant="h5" textAlign="center" gutterBottom>
-        Order our best food options
-      </Typography>
-      <Slider {...settings}>
-        {foodData.map((food, index) => (
-          <Box key={index} sx={{ textAlign: "center", padding: "10px" }}>
-            <Box
-              component="img"
-              src={food.image}
-              alt={food.name}
+    <React.Fragment>
+      <Container maxWidth="lg" sx={{py: 6}}>
+        <Box>
+          {/* Title */}
+          <Box sx={{ textAlign: "center", mb: 4 }}>
+            <Typography
+              variant="h5"
+              textAlign="center"
               sx={{
-                width: "100px",
-                height: "100px",
-                objectFit: "cover",
-                borderRadius: "50%",
-                margin: "0 auto",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                fontWeight: "bold",
+                textTransform: "uppercase",
               }}
-            />
-            <Typography variant="body1" mt={1}>
-              {food.name}
+            >
+              Book Your Stay at Our Hostel
+            </Typography>
+            <Typography variant="subtitle1" textAlign="center" gutterBottom>
+              Your perfect space for study, rest, and growth.
             </Typography>
           </Box>
-        ))}
-      </Slider>
-    </Box>
+          {/* Responsive Grid */}
+          <Grid container spacing={4}>
+            {hostels.map((hostel, index) => (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                key={index}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {/* Card for each hostel */}
+                <Card
+                  sx={{
+                    width: "100%",
+                    maxWidth: 400,
+                    borderRadius: 3,
+                    boxShadow: 4,
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                      boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.2)",
+                    },
+                  }}
+                >
+                  {/* Image */}
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={hostel.image}
+                    alt={hostel.type}
+                    sx={{
+                      borderRadius: "4px",
+                      objectFit: "cover",
+                    }}
+                  />
+                  {/* Content */}
+                  <CardContent sx={{ textAlign: "center" }}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {hostel.type}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" mt={1}>
+                      {hostel.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
+    </React.Fragment>
   );
 };
 
-export default HostelDesign;
+export default Hostel;

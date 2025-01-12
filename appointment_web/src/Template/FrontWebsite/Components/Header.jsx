@@ -131,7 +131,7 @@ export default function UniqueHeader() {
 
           {/* Sign In and Sign Up Buttons */}
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-            <Button variant="outlined" color="inherit">
+            <Button variant="outlined" color="primary">
               Sign In
             </Button>
             <Button variant="contained" color="primary">
