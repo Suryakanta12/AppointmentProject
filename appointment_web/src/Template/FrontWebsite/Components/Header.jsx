@@ -31,7 +31,7 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { ThemeContext } from "../../../ContextOrRedux/ThemeProvider.js";
 
-const pages = ["Home", "About", "Our Businesses","News 22222222222222Room", "ContactUs"];
+const pages = ["Home", "About", "Our Businesses","News Room", "ContactUs"];
 const settings = ["Profile", "Orders", "Logout"];
 
 export default function UniqueHeader() {
