@@ -6,13 +6,13 @@ const lightTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#FF671F', // Bright orange
+            main: '#ff5200', // Bright orange
         },
         secondary: {
             main: '#2ecc71', // Green
         },
         background: {
-            default: '#ecf0f1', // Light gray
+            // default: '#ecf0f1', // Light gray
             paper: '#ffffff', // White for paper elements
         },
         text: {

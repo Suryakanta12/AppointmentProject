@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -30,13 +31,13 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { ThemeContext } from "../../../ContextOrRedux/ThemeProvider.js";
 
-const pages = ["Home", "Explore", "Favorites", "Contact"];
+const pages = ["Home", "About", "Our Businesses","News 22222222222222Room", "ContactUs"];
 const settings = ["Profile", "Orders", "Logout"];
 
 export default function UniqueHeader() {
   const themeMode = useContext(ThemeContext);
   const darkMode = themeMode.state.darkMode;
-
+  const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -118,6 +119,7 @@ export default function UniqueHeader() {
             <Box sx={{ mr:2 }}>
             <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
           <IconButton
+          color="inherit"
             onClick={() =>
               themeMode.dispatch({
                 type: darkMode ? "LIGHTMODE" : "DARKMODE",
@@ -131,10 +133,10 @@ export default function UniqueHeader() {
 
           {/* Sign In and Sign Up Buttons */}
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-            <Button variant="outlined" color="primary">
+            <Button variant="outlined" color="primary" onClick={() => navigate('/SignIn')}>
               Sign In
             </Button>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={() => navigate('/SignUp')}>
               Sign Up
             </Button>
           </Box>

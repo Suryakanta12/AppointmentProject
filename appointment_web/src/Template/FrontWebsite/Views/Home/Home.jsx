@@ -9,6 +9,7 @@ import Beauty from './Sections/Beauty.jsx';
 import FoodCatering from './Sections/FoodCatering.jsx';
 import FashionDesign from './Sections/FashionDesign.jsx';
 import ProfessionalServices from './Sections/ProfessionalServices.jsx';
+import Footer from 'Template/FrontWebsite/Components/Footer.jsx';
 export default function Home() {
   return (
     <React.Fragment>
@@ -21,6 +22,7 @@ export default function Home() {
       <Beauty/>
       <FashionDesign/>
       <ProfessionalServices/>
+      <Footer/>
       
     </React.Fragment>
     

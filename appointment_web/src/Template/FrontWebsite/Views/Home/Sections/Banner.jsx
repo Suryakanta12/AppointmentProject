@@ -108,15 +108,18 @@ export default function UniqueSearchAndCategories() {
     <Box
       sx={{
         minHeight: "100vh",
+        // background: darkMode
+        //   ? "linear-gradient(135deg, #0f2027, #203a43, #2c5364)"
+        //   : "linear-gradient(135deg, #f0f4f7, #d9e8eb, #b4d4da)",#ff671f45, #ffffff45, #046a3845
         background: darkMode
           ? "linear-gradient(135deg, #0f2027, #203a43, #2c5364)"
-          : "linear-gradient(135deg, #f0f4f7, #d9e8eb, #b4d4da)",
+          : "#2c3e50",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         padding: 4,
         gap: 4,
-        color: darkMode ? "white" : "#333",
+        color:  "white",
       }}
     >
       <Container maxWidth="lg">
@@ -139,7 +142,7 @@ export default function UniqueSearchAndCategories() {
             justifyContent: "center",
             backgroundColor: darkMode
               ? "rgba(255, 255, 255, 0.1)"
-              : "rgba(0, 0, 0, 0.05)",
+              : "rgba(255 255 255)",
             borderRadius: "16px",
             padding: 3,
             boxShadow: 3,
@@ -219,68 +222,68 @@ export default function UniqueSearchAndCategories() {
           {categories.map((category, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
               <Box
-        // onClick={() => handleCategoryClick(category)}
-        sx={{
-          textAlign: "center",
-          padding: "10px",
-          cursor: "pointer",
-          "&:hover": {
-            transform: "scale(1.05)", // Scale up the box
-            boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)", // Add shadow on hover
-            transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
-          },
-        }}
-      >
-        <Box
-          sx={{
-            position: "relative",
-            width: "120px",
-            height: "120px",
-            margin: "0 auto",
-            borderRadius: "50%",
-            overflow: "hidden",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-            "&:hover::before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.4)", // Dark overlay
-              zIndex: 1,
-            },
-          }}
-        >
-          <Box
-            component="img"
-            src={category.image}
-            alt={category.title}
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "transform 0.3s ease",
-              "&:hover": {
-                transform: "scale(1.1)", // Zoom image on hover
-              },
-            }}
-          />
-        </Box>
-        <Typography
-          variant="body1"
-          mt={2}
-          sx={{
-            fontWeight: "bold",
-            transition: "color 0.3s ease",
-            "&:hover": {
-              color: "#FF5722", // Change text color on hover
-            },
-          }}
-        >
-          {category.title}
-        </Typography>
-      </Box>
+                // onClick={() => handleCategoryClick(category)}
+                sx={{
+                  textAlign: "center",
+                  padding: "10px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    transform: "scale(1.05)", // Scale up the box
+                    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)", // Add shadow on hover
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    position: "relative",
+                    width: "120px",
+                    height: "120px",
+                    margin: "0 auto",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                    "&:hover::before": {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "rgba(0, 0, 0, 0.4)", // Dark overlay
+                      zIndex: 1,
+                    },
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={category.image}
+                    alt={category.title}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      transition: "transform 0.3s ease",
+                      "&:hover": {
+                        transform: "scale(1.1)", // Zoom image on hover
+                      },
+                    }}
+                  />
+                </Box>
+                <Typography
+                  variant="body1"
+                  mt={2}
+                  sx={{
+                    fontWeight: "bold",
+                    transition: "color 0.3s ease",
+                    "&:hover": {
+                      color: "#FF5722", // Change text color on hover
+                    },
+                  }}
+                >
+                  {category.title}
+                </Typography>
+              </Box>
             </Grid>
           ))}
         </Grid>
