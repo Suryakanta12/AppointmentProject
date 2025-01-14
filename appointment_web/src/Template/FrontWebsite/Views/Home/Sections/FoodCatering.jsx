@@ -48,8 +48,26 @@ const FoodCatering = () => {
       <Container maxWidth="lg" sx={{ py: 6 }}>
         <Box>
           {/* Header Section */}
-          <Box sx={{ textAlign: "center", mb:4 }}>
-          <Typography
+          <Box sx={{ textAlign: "center", mb: 4 }}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              textTransform="uppercase"
+              textAlign="center"
+              gutterBottom
+              sx={{ mb: 2 }}
+            >
+              Food Catering Services
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              textAlign="center"
+              color="text.secondary"
+              sx={{ mb: 2 }}
+            >
+              Good food, good company, unforgettable moments.
+            </Typography>
+            {/* <Typography
             variant="h5"
             textAlign="center"
             sx={{
@@ -62,7 +80,7 @@ const FoodCatering = () => {
           </Typography>
           <Typography variant="subtitle1" textAlign="center" gutterBottom>
           Good food, good company, unforgettable moments.
-          </Typography>
+          </Typography> */}
           </Box>
           {/* Categories Grid */}
           <Grid container spacing={4}>

@@ -44,6 +44,24 @@ const Garage = () => {
         <Box>
           <Box sx={{ textAlign: "center", mb: 4 }}>
             <Typography
+              variant="h4"
+              fontWeight="bold"
+              textTransform="uppercase"
+              textAlign="center"
+              gutterBottom
+              sx={{ mb: 2 }}
+            >
+              Your Trusted Garage Service, Book Now!
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              textAlign="center"
+              color="text.secondary"
+              sx={{ mb: 2 }}
+            >
+              Book your appointment today and drive with confidence.
+            </Typography>
+            {/* <Typography
               variant="h5"
               align="center"
               sx={{
@@ -55,7 +73,7 @@ const Garage = () => {
             </Typography>
             <Typography variant="subtitle1" textAlign="center" gutterBottom>
               Book your appointment today and drive with confidence.
-            </Typography>
+            </Typography> */}
           </Box>
           <Grid container spacing={4}>
             {categories.map((category, index) => (

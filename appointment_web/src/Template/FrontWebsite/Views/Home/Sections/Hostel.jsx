@@ -29,11 +29,29 @@ const Hostel = () => {
 
   return (
     <React.Fragment>
-      <Container maxWidth="lg" sx={{py: 6}}>
+      <Container maxWidth="lg" sx={{ py: 6 }}>
         <Box>
           {/* Title */}
           <Box sx={{ textAlign: "center", mb: 4 }}>
             <Typography
+              variant="h4"
+              fontWeight="bold"
+              textTransform="uppercase"
+              textAlign="center"
+              gutterBottom
+              sx={{ mb: 2 }}
+            >
+              Book Your Stay at Our Hostel
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              textAlign="center"
+              color="text.secondary"
+              sx={{ mb: 2 }}
+            >
+              Your perfect space for study, rest, and growth.
+            </Typography>
+            {/* <Typography
               variant="h5"
               textAlign="center"
               sx={{
@@ -45,7 +63,7 @@ const Hostel = () => {
             </Typography>
             <Typography variant="subtitle1" textAlign="center" gutterBottom>
               Your perfect space for study, rest, and growth.
-            </Typography>
+            </Typography> */}
           </Box>
           {/* Responsive Grid */}
           <Grid container spacing={4}>

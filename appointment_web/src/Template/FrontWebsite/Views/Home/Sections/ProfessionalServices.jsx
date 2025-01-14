@@ -68,7 +68,25 @@ const ProfessionalServices = () => {
         <Box>
           {/* Header Section */}
           <Box sx={{ textAlign: "center", mb: 4 }}>
-          <Typography
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              textTransform="uppercase"
+              textAlign="center"
+              gutterBottom
+              sx={{ mb: 2 }}
+            >
+              Professional Services and Expertise
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              textAlign="center"
+              color="text.secondary"
+              sx={{ mb: 2 }}
+            >
+              Explore and connect with top professionals from various fields
+            </Typography>
+            {/* <Typography
             variant="h5"
             align="center"
             sx={{
@@ -81,7 +99,7 @@ const ProfessionalServices = () => {
           </Typography>
           <Typography variant="subtitle1" textAlign="center" gutterBottom>
             Explore and connect with top professionals from various fields
-          </Typography>
+          </Typography> */}
           </Box>
           {/* Grid Section */}
           <Grid container spacing={4} sx={{ mt: 3 }}>

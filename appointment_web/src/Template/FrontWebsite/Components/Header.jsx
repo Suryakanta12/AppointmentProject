@@ -44,7 +44,9 @@ export default function UniqueHeader() {
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
   };
-
+  const handleNavigation = (page) => {
+    page === "Home" ? navigate("/") : navigate("/" + page);
+  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -86,6 +88,7 @@ export default function UniqueHeader() {
             {pages.map((page) => (
               <Button
                 key={page}
+                onClick={() => handleNavigation(page.replace(/\s+/g, ''))}
                 sx={{
                   mx: 1,
                   color: darkMode ? "#fff" : "#333",
@@ -180,7 +183,7 @@ export default function UniqueHeader() {
           <Divider />
           <List>
             {pages.map((page) => (
-              <ListItem button key={page}>
+              <ListItem button key={page} onClick={() => handleNavigation(page)}>
                 <ListItemText primary={page} />
               </ListItem>
             ))}

@@ -7,6 +7,7 @@ import {
   Button,
   Link,
   IconButton,
+  Container,
 } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -19,6 +20,8 @@ const Footer = () => {
       const themeMode = useContext(ThemeContext);
       const darkMode = themeMode.state.darkMode;
   return (
+    <React.Fragment>
+      
     <Box
       sx={{
         background: darkMode
@@ -26,9 +29,9 @@ const Footer = () => {
           : "#2c3e50",
         color: "white",
         py: 6,
-        px: { xs: 2, sm: 4, md: 8 },
       }}
     >
+      <Container maxWidth="lg" >
       <Grid container spacing={4}>
         {/* Logo and About Section */}
         <Grid item xs={12} md={3}>
@@ -176,7 +179,9 @@ const Footer = () => {
           </Grid>
         </Grid>
       </Box>
+      </Container>
     </Box>
+    </React.Fragment>
   );
 };
 

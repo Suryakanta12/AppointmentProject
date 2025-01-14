@@ -30,7 +30,7 @@ const SignIn = () => {
       <Box
         sx={{
           width: { xs: "90%", sm: "70%", md: "40%" },
-          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          backgroundColor: "rgba(255, 255, 255)",
           borderRadius: 4,
           boxShadow: 5,
           padding: 4,

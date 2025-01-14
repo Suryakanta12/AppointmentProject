@@ -57,6 +57,24 @@ const FashionDesign = () => {
           {/* Header Section */}
           <Box sx={{ textAlign: "center", mb: 4 }}>
             <Typography
+              variant="h4"
+              fontWeight="bold"
+              textTransform="uppercase"
+              textAlign="center"
+              gutterBottom
+              sx={{ mb: 2 }}
+            >
+              Book Your Fashion Design Consultation
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              textAlign="center"
+              color="text.secondary"
+              sx={{ mb: 2 }}
+            >
+              Your personal designer is just a click away.
+            </Typography>
+            {/* <Typography
               variant="h5"
               align="center"
               sx={{
@@ -68,11 +86,11 @@ const FashionDesign = () => {
             </Typography>
             <Typography variant="subtitle1" textAlign="center" gutterBottom>
               Your personal designer is just a click away.
-            </Typography>
+            </Typography> */}
           </Box>
 
           {/* Categories Grid */}
-          <Grid container spacing={4} >
+          <Grid container spacing={4}>
             {categories.map((category, index) => (
               <Grid item xs={12} sm={6} md={4} lg={4} key={index}>
                 <Card

@@ -44,6 +44,25 @@ const Hospital = () => {
         <Box>
           <Box sx={{ textAlign: "center", mb: 4 }}>
             <Typography
+              variant="h4"
+              fontWeight="bold"
+              textTransform="uppercase"
+              textAlign="center"
+              gutterBottom
+              sx={{ mb: 2 }}
+            >
+              Your Health, Our Priority
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              textAlign="center"
+              color="text.secondary"
+              sx={{ mb: 2 }}
+            >
+              Your health is our responsibility; booking an appointment is
+              yours.
+            </Typography>
+            {/* <Typography
               variant="h5"
               align="center"
               sx={{
@@ -56,7 +75,7 @@ const Hospital = () => {
             <Typography variant="subtitle1" textAlign="center" gutterBottom>
               Your health is our responsibility; booking an appointment is
               yours.
-            </Typography>
+            </Typography> */}
           </Box>
           <Grid container spacing={4}>
             {categories.map((category, index) => (
