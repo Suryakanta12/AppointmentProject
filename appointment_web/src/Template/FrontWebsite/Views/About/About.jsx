@@ -30,6 +30,7 @@ import WhyChooseUs from "./Sections/WhyChooseUs.jsx";
 import WhatOurCustomersSay from "./Sections/WhatOurCustomersSay.jsx";
 import Header from 'Template/FrontWebsite/Components/Header.jsx';
 import Footer from 'Template/FrontWebsite/Components/Footer.jsx';
+// import WhatWeOffer from "./Sections/WhatWeOffer.jsx";
 export default function AboutPage() {
 
 
@@ -40,6 +41,7 @@ export default function AboutPage() {
     <GetToKnow/>
     <WhyChooseUs/>
     <WhatOurCustomersSay/>
+    {/* <WhatWeOffer/> */}
     <Footer/>
     </>
   );

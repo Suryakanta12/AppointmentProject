@@ -113,7 +113,7 @@ export default function UniqueSearchAndCategories() {
         //   : "linear-gradient(135deg, #f0f4f7, #d9e8eb, #b4d4da)",#ff671f45, #ffffff45, #046a3845
         background: darkMode
           ? "linear-gradient(135deg, #0f2027, #203a43, #2c5364)"
-          : "#2c3e50",
+          : "linear-gradient(178deg, #0d47a1, #1267ab);",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
