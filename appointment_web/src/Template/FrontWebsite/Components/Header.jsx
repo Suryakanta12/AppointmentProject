@@ -34,7 +34,7 @@ import { ThemeContext } from "../../../ContextOrRedux/ThemeProvider.js";
 const pages = ["Home", "About", "Our Businesses","News Room", "ContactUs"];
 const settings = ["Profile", "Orders", "Logout"];
 
-export default function UniqueHeader() {
+export default function Header() {
   const themeMode = useContext(ThemeContext);
   const darkMode = themeMode.state.darkMode;
   const navigate = useNavigate();

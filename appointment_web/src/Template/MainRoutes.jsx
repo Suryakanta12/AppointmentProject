@@ -9,6 +9,7 @@ import OurBusinesses from "./FrontWebsite/Views/OurBusinesses/OurBusinesses.jsx"
 import NewsRoom from "./FrontWebsite/Views/NewsRoom/NewsRoom.jsx";
 import ContactUs from "./FrontWebsite/Views/ContactUs/ContactUs.jsx";
 import HostelDetails from "./FrontWebsite/Views/AllAppointmentDetails/HostelDetails.jsx";
+import FoodCateringDetails from "./FrontWebsite/Views/AllAppointmentDetails/FoodCateringDetails.jsx";
 
 var hist = createBrowserHistory();
 export default function MainRoutes() {
@@ -23,6 +24,7 @@ export default function MainRoutes() {
         <Route exact path="/NewsRoom" element={<NewsRoom/>} />
         <Route exact path="/ContactUs" element={<ContactUs/>} />
         <Route exact path="/HostelDetails" element={<HostelDetails/>} />
+        <Route exact path="/FoodCateringDetails" element={<FoodCateringDetails/>} />
       </Routes>
     </Router>
   );

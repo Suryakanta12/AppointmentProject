@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -22,75 +23,82 @@ const categories = [
   {
     id: 1,
     title: "Hostels",
+    NavigatePage: "/HostelDetails",
     image:
       "https://img.freepik.com/free-photo/young-friends-hostel_52683-121725.jpg?t=st=1736351983~exp=1736355583~hmac=214f52f3ec6c8eb64a7748ef3a0d36133231a41cb0f3a46d518a7c4620def46f&w=900",
   },
   {
     id: 2,
     title: "Hospitals",
+    NavigatePage: "/HospitalDetails",
     image:
       "https://img.freepik.com/free-photo/modern-hospital-building-exterior_1150-3567.jpg?t=st=1736352417~exp=1736354017~hmac=20f460b8639989b3466f5fa5851bb6858b6cfeb72c1ec7a78e2f0570f2705d37&w=900",
   },
   {
     id: 3,
     title: "Garages",
+    NavigatePage: "/GarageDetails",
     image:
       "https://img.freepik.com/free-photo/auto-repair-shop-interior-with-tools_1150-3134.jpg?t=st=1736352641~exp=1736354241~hmac=57b2f7c2551cc5db5bdb5c5e1a12c3b4c312051197fdfcfebf285d9fd80ea94b&w=900",
   },
   {
     id: 4,
-    title: "Salons",
+    title: "Beauty & Tattoo",
+    NavigatePage: "/BeautyDetails",
     image:
       "https://img.freepik.com/free-photo/beauty-salon-interior-with-modern-furniture_1150-3916.jpg?t=st=1736352683~exp=1736354283~hmac=84b1ac4129072b51ad9ae1e9d9cbd2e12cdd22d55b072b14ae158f28c1bc8a5d&w=900",
   },
   {
     id: 5,
-    title: "Private Office",
+    title: "Food Catering",
+    NavigatePage: "/FoodCateringDetails",
     image:
       "https://img.freepik.com/free-photo/modern-office-interior-with-computer_1150-3007.jpg?t=st=1736352945~exp=1736354545~hmac=f736d625efaa1d7f9410322a2eeb55d0c70ddef0285cf2923378b87112a57a70&w=900",
   },
   {
     id: 6,
-    title: "janaseva kendra",
+    title: "Fashion Design",
+    NavigatePage: "/FashionDesignDetails",
     image:
       "https://img.freepik.com/free-photo/cozy-interior-modern-cafe-with-computers_1150-3193.jpg?t=st=1736353022~exp=1736354622~hmac=c8eb1be6a1e1d19eb7d424f63a29a8b828908b1919e4c1be67acde64f3d4a735&w=900",
   },
   {
     id: 7,
-    title: "Hotels",
+    title: "Professional Services and Expertise",
+    NavigatePage: "/ProfessionalServicesDetails",
     image:
       "https://img.freepik.com/free-photo/luxury-hotel-room-interior-with-comfortable-bed_1150-3057.jpg?t=st=1736353125~exp=1736354725~hmac=28d91c5b7c1e27c34abf57f5c08ca2327646e09d09ad43161f35e8f61ad84c96&w=900",
   },
-  {
-    id: 8,
-    title: "Taxis",
-    image:
-      "https://img.freepik.com/free-photo/taxi-service-modern-yellow-cab-car_1150-3522.jpg?t=st=1736353246~exp=1736354846~hmac=8c021b2123857f0fc597120c0362899a727ab5d34d07b0e84f648f0c101f6801&w=900",
-  },
-  {
-    id: 9,
-    title: "Food Caterings",
-    image:
-      "https://img.freepik.com/free-photo/government-office-building_1150-3244.jpg?t=st=1736353312~exp=1736354912~hmac=4a8a5d28700e5f3e6a0ac17b5b6fd3997984b98d09a34e3e52f516da31ad4be4&w=900",
-  },
-  {
-    id: 10,
-    title: "Schools",
-    image:
-      "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
-  },
-  {
-    id: 11,
-    title: "Fashion Design",
-    image:
-      "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
-  },
-  {
-    id: 12,
-    title: "Teachers Appointments",
-    image:
-      "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
-  },
+  // {
+  //   id: 8,
+  //   title: "Taxis",
+  //   image:
+  //     "https://img.freepik.com/free-photo/taxi-service-modern-yellow-cab-car_1150-3522.jpg?t=st=1736353246~exp=1736354846~hmac=8c021b2123857f0fc597120c0362899a727ab5d34d07b0e84f648f0c101f6801&w=900",
+  // },
+  // {
+  //   id: 9,
+  //   title: "Food Caterings",
+  //   image:
+  //     "https://img.freepik.com/free-photo/government-office-building_1150-3244.jpg?t=st=1736353312~exp=1736354912~hmac=4a8a5d28700e5f3e6a0ac17b5b6fd3997984b98d09a34e3e52f516da31ad4be4&w=900",
+  // },
+  // {
+  //   id: 10,
+  //   title: "Schools",
+  //   image:
+  //     "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
+  // },
+  // {
+  //   id: 11,
+  //   title: "Fashion Design",
+  //   image:
+  //     "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
+  // },
+  // {
+  //   id: 12,
+  //   title: "Teachers Appointments",
+  //   image:
+  //     "https://img.freepik.com/free-photo/school-building-with-grass-yard_1150-3586.jpg?t=st=1736353422~exp=1736355022~hmac=ea5de4d801ed70d5d0c931dd1ed2f3cc04bfa38bdfc5edb503f3f4d11d16ebfd&w=900",
+  // },
 ];
 
 const responsiveSettings = [
@@ -103,6 +111,7 @@ const responsiveSettings = [
 export default function UniqueSearchAndCategories() {
   const themeMode = useContext(ThemeContext);
   const darkMode = themeMode.state.darkMode;
+    const navigate = useNavigate();
 
   return (
     <Box
@@ -220,9 +229,9 @@ export default function UniqueSearchAndCategories() {
         </Box>
         <Grid container spacing={4}>
           {categories.map((category, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
               <Box
-                // onClick={() => handleCategoryClick(category)}
+                onClick={() => navigate(category.NavigatePage)}
                 sx={{
                   textAlign: "center",
                   padding: "10px",

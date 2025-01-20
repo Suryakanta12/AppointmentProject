@@ -30,15 +30,17 @@ import FormLabel from "@mui/material/FormLabel";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SortIcon from "@mui/icons-material/Sort";
 import CloseIcon from "@mui/icons-material/Close";
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Header from "Template/FrontWebsite/Components/Header.jsx";
 import Footer from "Template/FrontWebsite/Components/Footer.jsx";
-export default function HostelDetails() {
+
+export default function FoodCateringDetails() {
   const [filters, setFilters] = useState({
     location: "",
     priceRange: [1000, 10000],
-    type: { boys: false, girls: false, coed: false },
-    amenities: { wifi: false, parking: false, ac: false },
+    serviceType: { buffet: false, plated: false, familyStyle: false },
+    dietaryPreferences: { vegan: false, vegetarian: false, nonVeg: false },
+    mealType: { lunch: false, dinner: false, breakfast: false },
     rating: 0,
   });
   const [sortBy, setSortBy] = useState("relevance");
@@ -46,72 +48,88 @@ export default function HostelDetails() {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSortOpen, setSortOpen] = useState(false);
 
-  // Mock JSON Data (30 Hostels)
-  const hostelData = Array.from({ length: 30 }, (_, i) => ({
+  // Mock JSON Data (30 Food Catering)
+  const cateringData = Array.from({ length: 30 }, (_, i) => ({
     id: i + 1,
-    name: `Hostel ${i + 1}`,
+    name: `Food Catering ${i + 1}`,
     location: i % 2 === 0 ? "New York" : "San Francisco",
     price: Math.floor(1000 + Math.random() * 9000),
-    type: i % 3 === 0 ? "boys" : i % 3 === 1 ? "girls" : "coed",
-    amenities: [
-      ...(Math.random() > 0.5 ? ["Wi-Fi"] : []),
-      ...(Math.random() > 0.5 ? ["Parking"] : []),
-      ...(Math.random() > 0.5 ? ["AC"] : []),
+    serviceType:
+      i % 3 === 0 ? "buffet" : i % 3 === 1 ? "plated" : "familyStyle",
+    dietaryPreferences: [
+      ...(Math.random() > 0.5 ? ["Vegan"] : []),
+      ...(Math.random() > 0.5 ? ["Vegetarian"] : []),
+      ...(Math.random() > 0.5 ? ["Non-Veg"] : []),
     ],
+    mealType: i % 2 === 0 ? "lunch" : "dinner",
     rating: Math.floor(Math.random() * 5 + 1),
     datePublished: `2025-01-${String(i + 1).padStart(2, "0")}`,
     distance: Math.floor(Math.random() * 20 + 1),
-    image: `https://via.placeholder.com/300x200?text=Hostel+${i + 1}`,
+    image: `https://via.placeholder.com/300x200?text=Catering+${i + 1}`,
   }));
 
   const itemsPerPage = 6;
 
   // Filter Logic
   const applyFilters = () => {
-    let filteredData = [...hostelData];
+    let filteredData = [...cateringData];
 
     // Filter by location
     if (filters.location) {
-      filteredData = filteredData.filter((hostel) =>
-        hostel.location.toLowerCase().includes(filters.location.toLowerCase()),
+      filteredData = filteredData.filter((catering) =>
+        catering.location
+          .toLowerCase()
+          .includes(filters.location.toLowerCase()),
       );
     }
 
     // Filter by price range
     filteredData = filteredData.filter(
-      (hostel) =>
-        hostel.price >= filters.priceRange[0] &&
-        hostel.price <= filters.priceRange[1],
+      (catering) =>
+        catering.price >= filters.priceRange[0] &&
+        catering.price <= filters.priceRange[1],
     );
 
-    // Filter by type
-    const { boys, girls, coed } = filters.type;
-    if (boys || girls || coed) {
+    // Filter by service type
+    const { buffet, plated, familyStyle } = filters.serviceType;
+    if (buffet || plated || familyStyle) {
       filteredData = filteredData.filter(
-        (hostel) =>
-          (boys && hostel.type === "boys") ||
-          (girls && hostel.type === "girls") ||
-          (coed && hostel.type === "coed"),
+        (catering) =>
+          (buffet && catering.serviceType === "buffet") ||
+          (plated && catering.serviceType === "plated") ||
+          (familyStyle && catering.serviceType === "familyStyle"),
       );
     }
 
-    // Filter by amenities
-    const { wifi, parking, ac } = filters.amenities;
-    if (wifi || parking || ac) {
-      filteredData = filteredData.filter((hostel) =>
-        ["Wi-Fi", "Parking", "AC"].every(
-          (amenity) =>
-            (!wifi || hostel.amenities.includes("Wi-Fi")) &&
-            (!parking || hostel.amenities.includes("Parking")) &&
-            (!ac || hostel.amenities.includes("AC")),
+    // Filter by dietary preferences
+    const { vegan, vegetarian, nonVeg } = filters.dietaryPreferences;
+    if (vegan || vegetarian || nonVeg) {
+      filteredData = filteredData.filter((catering) =>
+        ["Vegan", "Vegetarian", "Non-Veg"].every(
+          (preference) =>
+            (!vegan || catering.dietaryPreferences.includes("Vegan")) &&
+            (!vegetarian ||
+              catering.dietaryPreferences.includes("Vegetarian")) &&
+            (!nonVeg || catering.dietaryPreferences.includes("Non-Veg")),
         ),
+      );
+    }
+
+    // Filter by meal type
+    const { lunch, dinner, breakfast } = filters.mealType;
+    if (lunch || dinner || breakfast) {
+      filteredData = filteredData.filter(
+        (catering) =>
+          (lunch && catering.mealType === "lunch") ||
+          (dinner && catering.mealType === "dinner") ||
+          (breakfast && catering.mealType === "breakfast"),
       );
     }
 
     // Filter by rating
     if (filters.rating > 0) {
       filteredData = filteredData.filter(
-        (hostel) => hostel.rating >= filters.rating,
+        (catering) => catering.rating >= filters.rating,
       );
     }
 
@@ -131,13 +149,14 @@ export default function HostelDetails() {
     return filteredData;
   };
 
-  const filteredHostels = applyFilters();
+  const filteredCatering = applyFilters();
 
   // Paginated Data
-  const paginatedHostels = filteredHostels.slice(
+  const paginatedCatering = filteredCatering.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage,
   );
+
   // Render Filters
   const renderFilters = () => (
     <Box sx={{ width: 300, p: 2 }}>
@@ -185,18 +204,21 @@ export default function HostelDetails() {
       </Box>
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Type
+          Service Type
         </Typography>
-        {["boys", "girls", "coed"].map((type) => (
+        {["buffet", "plated", "familyStyle"].map((type) => (
           <FormControlLabel
             key={type}
             control={
               <Checkbox
-                checked={filters.type[type]}
+                checked={filters.serviceType[type]}
                 onChange={(e) =>
                   setFilters({
                     ...filters,
-                    type: { ...filters.type, [type]: e.target.checked },
+                    serviceType: {
+                      ...filters.serviceType,
+                      [type]: e.target.checked,
+                    },
                   })
                 }
               />
@@ -207,26 +229,48 @@ export default function HostelDetails() {
       </Box>
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Amenities
+          Dietary Preferences
         </Typography>
-        {["wifi", "parking", "ac"].map((amenity) => (
+        {["vegan", "vegetarian", "nonVeg"].map((preference) => (
           <FormControlLabel
-            key={amenity}
+            key={preference}
             control={
               <Checkbox
-                checked={filters.amenities[amenity]}
+                checked={filters.dietaryPreferences[preference]}
                 onChange={(e) =>
                   setFilters({
                     ...filters,
-                    amenities: {
-                      ...filters.amenities,
-                      [amenity]: e.target.checked,
+                    dietaryPreferences: {
+                      ...filters.dietaryPreferences,
+                      [preference]: e.target.checked,
                     },
                   })
                 }
               />
             }
-            label={amenity.toUpperCase()}
+            label={preference.charAt(0).toUpperCase() + preference.slice(1)}
+          />
+        ))}
+      </Box>
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+          Meal Type
+        </Typography>
+        {["lunch", "dinner", "breakfast"].map((meal) => (
+          <FormControlLabel
+            key={meal}
+            control={
+              <Checkbox
+                checked={filters.mealType[meal]}
+                onChange={(e) =>
+                  setFilters({
+                    ...filters,
+                    mealType: { ...filters.mealType, [meal]: e.target.checked },
+                  })
+                }
+              />
+            }
+            label={meal.charAt(0).toUpperCase() + meal.slice(1)}
           />
         ))}
       </Box>
@@ -282,20 +326,6 @@ export default function HostelDetails() {
           />
         </RadioGroup>
       </FormControl>
-      {/* <Typography variant="h6" fontWeight="bold" gutterBottom>
-        Sort By
-      </Typography>
-      <Select
-        value={sortBy}
-        onChange={(e) => setSortBy(e.target.value)}
-        fullWidth
-      >
-        <MenuItem value="relevance">Relevance</MenuItem>
-        <MenuItem value="lowToHigh">Price: Low to High</MenuItem>
-        <MenuItem value="highToLow">Price: High to Low</MenuItem>
-        <MenuItem value="datePublished">Date Published</MenuItem>
-        <MenuItem value="distance">Distance</MenuItem>
-      </Select> */}
     </Box>
   );
   const handleChange = (event, newValue) => {
@@ -354,25 +384,9 @@ export default function HostelDetails() {
             borderRight: { md: "1px solid #e0e0e0" },
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-            <Typography variant="h5" fontWeight="bold" gutterBottom>
-              Filters
-            </Typography>
-            {/* <Button variant="text" startIcon={<SortIcon />}>
-              Short
-            </Button> */}
-            {/* <Select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              size="small"
-            >
-              <MenuItem value="relevance">Relevance</MenuItem>
-              <MenuItem value="lowToHigh">Price: Low to High</MenuItem>
-              <MenuItem value="highToLow">Price: High to Low</MenuItem>
-              <MenuItem value="datePublished">Date Published</MenuItem>
-              <MenuItem value="distance">Distance</MenuItem>
-            </Select> */}
-          </Box>
+          <Typography variant="h5" fontWeight="bold" gutterBottom>
+            Filters
+          </Typography>
 
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
@@ -403,18 +417,21 @@ export default function HostelDetails() {
           </Box>
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Type
+              Service Type
             </Typography>
-            {["boys", "girls", "coed"].map((type) => (
+            {["buffet", "plated", "familyStyle"].map((type) => (
               <FormControlLabel
                 key={type}
                 control={
                   <Checkbox
-                    checked={filters.type[type]}
+                    checked={filters.serviceType[type]}
                     onChange={(e) =>
                       setFilters({
                         ...filters,
-                        type: { ...filters.type, [type]: e.target.checked },
+                        serviceType: {
+                          ...filters.serviceType,
+                          [type]: e.target.checked,
+                        },
                       })
                     }
                   />
@@ -425,26 +442,51 @@ export default function HostelDetails() {
           </Box>
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Amenities
+              Dietary Preferences
             </Typography>
-            {["wifi", "parking", "ac"].map((amenity) => (
+            {["vegan", "vegetarian", "nonVeg"].map((preference) => (
               <FormControlLabel
-                key={amenity}
+                key={preference}
                 control={
                   <Checkbox
-                    checked={filters.amenities[amenity]}
+                    checked={filters.dietaryPreferences[preference]}
                     onChange={(e) =>
                       setFilters({
                         ...filters,
-                        amenities: {
-                          ...filters.amenities,
-                          [amenity]: e.target.checked,
+                        dietaryPreferences: {
+                          ...filters.dietaryPreferences,
+                          [preference]: e.target.checked,
                         },
                       })
                     }
                   />
                 }
-                label={amenity.toUpperCase()}
+                label={preference.charAt(0).toUpperCase() + preference.slice(1)}
+              />
+            ))}
+          </Box>
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+              Meal Type
+            </Typography>
+            {["lunch", "dinner", "breakfast"].map((meal) => (
+              <FormControlLabel
+                key={meal}
+                control={
+                  <Checkbox
+                    checked={filters.mealType[meal]}
+                    onChange={(e) =>
+                      setFilters({
+                        ...filters,
+                        mealType: {
+                          ...filters.mealType,
+                          [meal]: e.target.checked,
+                        },
+                      })
+                    }
+                  />
+                }
+                label={meal.charAt(0).toUpperCase() + meal.slice(1)}
               />
             ))}
           </Box>
@@ -465,7 +507,7 @@ export default function HostelDetails() {
         <Box sx={{ flex: 1, p: 2 }}>
           <Box sx={{ mb: 3, display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" fontWeight="bold">
-              Hostels
+              Food Catering
             </Typography>
             {/* <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
               <MenuItem value="relevance">Relevance</MenuItem>
@@ -525,29 +567,43 @@ export default function HostelDetails() {
             </Tabs>
           </Box>
           <Grid container spacing={3}>
-            {paginatedHostels.map((hostel) => (
-              <Grid item xs={12} sm={6} md={4} key={hostel.id}>
+            {paginatedCatering.map((item) => (
+              <Grid item xs={12} md={6} lg={4} key={item.id}>
                 <Card>
                   <CardMedia
                     component="img"
-                    height="140"
-                    image={hostel.image}
-                    alt={hostel.name}
+                    height="200"
+                    image={item.image}
+                    alt={item.name}
                   />
                   <CardContent>
                     <Typography variant="h6" fontWeight="bold">
-                      {hostel.name}
+                      {item.name}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {hostel.location}
+                    <Typography variant="body2" color="textSecondary">
+                      {item.location}
                     </Typography>
-                    <Typography variant="body1" fontWeight="bold">
-                      ${hostel.price}/month
+                    <Typography variant="h6" color="primary">
+                      ₹{item.price}
                     </Typography>
-                    <Rating value={hostel.rating} readOnly />
+                    <Box sx={{ mt: 1 }}>
+                      <Rating value={item.rating} readOnly />
+                    </Box>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      sx={{ mt: 1 }}
+                    >
+                      Service Type: {item.serviceType}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      Meal Type: {item.mealType}
+                    </Typography>
                   </CardContent>
-                  <CardActions sx={{ justifyContent: "flex-end" }}>
-                    <Button size="small" endIcon={<ArrowRightAltIcon/>}>View Details</Button>
+                  <CardActions>
+                    <Button variant="contained" color="primary" fullWidth>
+                      Book Now
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -555,7 +611,7 @@ export default function HostelDetails() {
           </Grid>
           <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
             <Pagination
-              count={Math.ceil(filteredHostels.length / itemsPerPage)}
+              count={Math.ceil(filteredCatering.length / itemsPerPage)}
               page={page}
               onChange={(e, value) => setPage(value)}
             />
@@ -563,6 +619,7 @@ export default function HostelDetails() {
         </Box>
         {/* </Box */}
       </Container>
+
       <Footer />
     </React.Fragment>
   );

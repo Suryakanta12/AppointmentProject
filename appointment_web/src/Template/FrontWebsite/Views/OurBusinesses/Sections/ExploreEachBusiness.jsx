@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Grid,
@@ -15,6 +16,7 @@ import {
 } from "@mui/material";
 
 export default function OurBusinesses() {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       <Container maxWidth="lg" sx={{ my: 3 }}>
@@ -35,40 +37,48 @@ export default function OurBusinesses() {
                 title: "Hostel",
                 description: "Find your home away from home.",
                 icon: "https://cdn-icons-png.flaticon.com/512/1398/1398478.png",
+                NavigatePage: "/HostelDetails",
               },
               {
                 title: "Food Catering",
                 description: "Taste the excellence in every bite.",
                 icon: "https://cdn-icons-png.flaticon.com/512/1940/1940898.png",
+                NavigatePage: "/FoodCateringDetails",
               },
               {
                 title: "Hospital Appointments",
                 description: "Your health, our priority.",
                 icon: "https://img.icons8.com/color/48/hospital-room.png",
+                NavigatePage: "/HospitalDetails",
               },
               {
                 title: "Garage Services",
                 description: "We keep your vehicles running smoothly.",
                 icon: "https://img.icons8.com/color/48/garage.png",
+                NavigatePage: "/GarageDetails",
               },
               {
                 title: "Beauty & Tattoo",
                 description: "Unleash your style with our experts.",
                 icon: "https://img.icons8.com/color/48/tattoo-machine.png",
+                NavigatePage: "/BeautyTattooDetails",
               },
               {
                 title: "Fashion Design",
                 description: "Style tailored to perfection.",
                 icon: "https://img.icons8.com/color/48/sewing-machine.png",
+                NavigatePage: "/FashionDesignDetails",
               },
               {
                 title: "Professional Services",
                 description: "Expertise that empowers.",
                 icon: "https://cdn-icons-png.flaticon.com/512/7179/7179048.png",
+                NavigatePage: "/ProfessionalServicesDetails",
               },
             ].map((business, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <Box
+                onClick={() => navigate(business.NavigatePage)}
                   sx={{
                     textAlign: "center",
                     p: 3,
