@@ -44,7 +44,7 @@ const categories = [
   {
     id: 4,
     title: "Beauty & Tattoo",
-    NavigatePage: "/BeautyDetails",
+    NavigatePage: "/BeautyTattooDetails",
     image:
       "https://img.freepik.com/free-photo/beauty-salon-interior-with-modern-furniture_1150-3916.jpg?t=st=1736352683~exp=1736354283~hmac=84b1ac4129072b51ad9ae1e9d9cbd2e12cdd22d55b072b14ae158f28c1bc8a5d&w=900",
   },

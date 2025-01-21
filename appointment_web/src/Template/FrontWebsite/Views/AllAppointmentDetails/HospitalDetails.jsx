@@ -38,10 +38,9 @@ export default function HospitalDetails() {
   const [filters, setFilters] = useState({
     location: "",
     priceRange: [1000, 10000],
-    serviceType: { buffet: false, plated: false, familyStyle: false },
-    dietaryPreferences: { vegan: false, vegetarian: false, nonVeg: false },
-    mealType: { lunch: false, dinner: false, breakfast: false },
     rating: 0,
+    type: [],
+    facilities: [],
   });
   const [sortBy, setSortBy] = useState("relevance");
   const [page, setPage] = useState(1);
@@ -49,112 +48,62 @@ export default function HospitalDetails() {
   const [isSortOpen, setSortOpen] = useState(false);
 
   // Mock JSON Data (30 Hospital)
-  const cateringData = Array.from({ length: 30 }, (_, i) => ({
+  const hospitalData = Array.from({ length: 30 }, (_, i) => ({
     id: i + 1,
     name: `Hospital ${i + 1}`,
-    location: i % 2 === 0 ? "New York" : "San Francisco",
-    price: Math.floor(1000 + Math.random() * 9000),
-    serviceType:
-      i % 3 === 0 ? "buffet" : i % 3 === 1 ? "plated" : "familyStyle",
-    dietaryPreferences: [
-      ...(Math.random() > 0.5 ? ["Vegan"] : []),
-      ...(Math.random() > 0.5 ? ["Vegetarian"] : []),
-      ...(Math.random() > 0.5 ? ["Non-Veg"] : []),
-    ],
-    mealType: i % 2 === 0 ? "lunch" : "dinner",
-    rating: Math.floor(Math.random() * 5 + 1),
-    datePublished: `2025-01-${String(i + 1).padStart(2, "0")}`,
-    distance: Math.floor(Math.random() * 20 + 1),
-    image: `https://via.placeholder.com/300x200?text=Catering+${i + 1}`,
+    location: `City ${i % 5 + 1}`,
+    type: i % 3 === 0 ? "Government" : i % 2 === 0 ? "Private" : "Multi-specialty",
+    facilities: {
+      ICU: Math.random() > 0.5,
+      Emergency: Math.random() > 0.5,
+      Pharmacy: Math.random() > 0.5,
+      Parking: Math.random() > 0.5,
+    },
+    image: `https://via.placeholder.com/150?text=Hospital+${i + 1}`,
+    rating: Math.random() * 5,
+    price: Math.floor(Math.random() * 9000) + 1000,
   }));
 
-  const itemsPerPage = 6;
+  const hospitalsPerPage = 6;
 
   // Filter Logic
   const applyFilters = () => {
-    let filteredData = [...cateringData];
-
-    // Filter by location
-    if (filters.location) {
-      filteredData = filteredData.filter((catering) =>
-        catering.location
-          .toLowerCase()
-          .includes(filters.location.toLowerCase()),
-      );
-    }
-
-    // Filter by price range
-    filteredData = filteredData.filter(
-      (catering) =>
-        catering.price >= filters.priceRange[0] &&
-        catering.price <= filters.priceRange[1],
+    let filtered = hospitalData.filter(
+      (hospital) =>
+        (!filters.location || hospital.location.includes(filters.location)) &&
+        hospital.price >= filters.priceRange[0] &&
+        hospital.price <= filters.priceRange[1] &&
+        hospital.rating >= filters.rating &&
+        (filters.type.length === 0 || filters.type.includes(hospital.type)) &&
+        filters.facilities.every((facility) => hospital.facilities[facility])
     );
 
-    // Filter by service type
-    const { buffet, plated, familyStyle } = filters.serviceType;
-    if (buffet || plated || familyStyle) {
-      filteredData = filteredData.filter(
-        (catering) =>
-          (buffet && catering.serviceType === "buffet") ||
-          (plated && catering.serviceType === "plated") ||
-          (familyStyle && catering.serviceType === "familyStyle"),
-      );
+    if (sortBy === "name") {
+      filtered = filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "priceLowToHigh") {
+      filtered = filtered.sort((a, b) => a.price - b.price);
+    } else if (sortBy === "priceHighToLow") {
+      filtered = filtered.sort((a, b) => b.price - a.price);
+    } else if (sortBy === "rating") {
+      filtered = filtered.sort((a, b) => b.rating - a.rating);
     }
 
-    // Filter by dietary preferences
-    const { vegan, vegetarian, nonVeg } = filters.dietaryPreferences;
-    if (vegan || vegetarian || nonVeg) {
-      filteredData = filteredData.filter((catering) =>
-        ["Vegan", "Vegetarian", "Non-Veg"].every(
-          (preference) =>
-            (!vegan || catering.dietaryPreferences.includes("Vegan")) &&
-            (!vegetarian ||
-              catering.dietaryPreferences.includes("Vegetarian")) &&
-            (!nonVeg || catering.dietaryPreferences.includes("Non-Veg")),
-        ),
-      );
-    }
-
-    // Filter by meal type
-    const { lunch, dinner, breakfast } = filters.mealType;
-    if (lunch || dinner || breakfast) {
-      filteredData = filteredData.filter(
-        (catering) =>
-          (lunch && catering.mealType === "lunch") ||
-          (dinner && catering.mealType === "dinner") ||
-          (breakfast && catering.mealType === "breakfast"),
-      );
-    }
-
-    // Filter by rating
-    if (filters.rating > 0) {
-      filteredData = filteredData.filter(
-        (catering) => catering.rating >= filters.rating,
-      );
-    }
-
-    // Sort by selected option
-    if (sortBy === "lowToHigh") {
-      filteredData.sort((a, b) => a.price - b.price);
-    } else if (sortBy === "highToLow") {
-      filteredData.sort((a, b) => b.price - a.price);
-    } else if (sortBy === "datePublished") {
-      filteredData.sort(
-        (a, b) => new Date(b.datePublished) - new Date(a.datePublished),
-      );
-    } else if (sortBy === "distance") {
-      filteredData.sort((a, b) => a.distance - b.distance);
-    }
-
-    return filteredData;
+    return filtered.slice((page - 1) * hospitalsPerPage, page * hospitalsPerPage);
   };
 
-  const filteredCatering = applyFilters();
-
+  const filteredHospitals = applyFilters();
+  const handleCheckboxChange = (key, value) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: prev[key].includes(value)
+        ? prev[key].filter((item) => item !== value)
+        : [...prev[key], value],
+    }));
+  };
   // Paginated Data
-  const paginatedCatering = filteredCatering.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage,
+  const paginatedCatering = filteredHospitals.slice(
+    (page - 1) * hospitalsPerPage,
+    page * hospitalsPerPage,
   );
 
   // Render Filters
@@ -177,114 +126,81 @@ export default function HospitalDetails() {
         </IconButton>
       </Box>
 
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Location
-        </Typography>
-        <TextField
-          fullWidth
-          placeholder="Enter location..."
-          value={filters.location}
-          onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-        />
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Price Range
-        </Typography>
-        <Slider
-          value={filters.priceRange}
-          min={1000}
-          max={10000}
-          valueLabelDisplay="auto"
-          onChange={(e, newValue) =>
-            setFilters({ ...filters, priceRange: newValue })
-          }
-        />
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Service Type
-        </Typography>
-        {["buffet", "plated", "familyStyle"].map((type) => (
-          <FormControlLabel
-            key={type}
-            control={
-              <Checkbox
-                checked={filters.serviceType[type]}
+      <Box>
+              {/* Location Filter */}
+              <TextField
+                fullWidth
+                label="Location"
+                variant="outlined"
+                size="small"
+                value={filters.location}
                 onChange={(e) =>
-                  setFilters({
-                    ...filters,
-                    serviceType: {
-                      ...filters.serviceType,
-                      [type]: e.target.checked,
-                    },
-                  })
+                  setFilters({ ...filters, location: e.target.value })
                 }
               />
-            }
-            label={type.charAt(0).toUpperCase() + type.slice(1)}
-          />
-        ))}
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Dietary Preferences
-        </Typography>
-        {["vegan", "vegetarian", "nonVeg"].map((preference) => (
-          <FormControlLabel
-            key={preference}
-            control={
-              <Checkbox
-                checked={filters.dietaryPreferences[preference]}
-                onChange={(e) =>
-                  setFilters({
-                    ...filters,
-                    dietaryPreferences: {
-                      ...filters.dietaryPreferences,
-                      [preference]: e.target.checked,
-                    },
-                  })
+
+              {/* Price Range */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Price Range
+              </Typography>
+              <Slider
+                value={filters.priceRange}
+                onChange={(_, newValue) =>
+                  setFilters({ ...filters, priceRange: newValue })
                 }
+                valueLabelDisplay="auto"
+                min={1000}
+                max={10000}
               />
-            }
-            label={preference.charAt(0).toUpperCase() + preference.slice(1)}
-          />
-        ))}
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Meal Type
-        </Typography>
-        {["lunch", "dinner", "breakfast"].map((meal) => (
-          <FormControlLabel
-            key={meal}
-            control={
-              <Checkbox
-                checked={filters.mealType[meal]}
-                onChange={(e) =>
-                  setFilters({
-                    ...filters,
-                    mealType: { ...filters.mealType, [meal]: e.target.checked },
-                  })
+
+              {/* Rating */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Rating
+              </Typography>
+              <Rating
+                value={filters.rating}
+                onChange={(_, newValue) =>
+                  setFilters({ ...filters, rating: newValue })
                 }
+                precision={0.5}
               />
-            }
-            label={meal.charAt(0).toUpperCase() + meal.slice(1)}
-          />
-        ))}
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Rating
-        </Typography>
-        <Rating
-          value={filters.rating}
-          onChange={(e, newValue) =>
-            setFilters({ ...filters, rating: newValue })
-          }
-        />
-      </Box>
+
+              {/* Type Filter */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Hospital Type
+              </Typography>
+              {["Government", "Private", "Multi-specialty"].map((type) => (
+                <FormControlLabel
+                  key={type}
+                  control={
+                    <Checkbox
+                      checked={filters.type.includes(type)}
+                      onChange={() => handleCheckboxChange("type", type)}
+                    />
+                  }
+                  label={type}
+                />
+              ))}
+
+              {/* Facilities */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Facilities
+              </Typography>
+              {["ICU", "Emergency", "Pharmacy", "Parking"].map((facility) => (
+                <FormControlLabel
+                  key={facility}
+                  control={
+                    <Checkbox
+                      checked={filters.facilities.includes(facility)}
+                      onChange={() =>
+                        handleCheckboxChange("facilities", facility)
+                      }
+                    />
+                  }
+                  label={facility}
+                />
+              ))}
+            </Box>
     </Box>
   );
   // Render Sorting
@@ -388,119 +304,81 @@ export default function HospitalDetails() {
             Filters
           </Typography>
 
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Location
-            </Typography>
-            <TextField
-              fullWidth
-              placeholder="Enter location..."
-              value={filters.location}
-              onChange={(e) =>
-                setFilters({ ...filters, location: e.target.value })
-              }
-            />
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Price Range
-            </Typography>
-            <Slider
-              value={filters.priceRange}
-              min={1000}
-              max={10000}
-              valueLabelDisplay="auto"
-              onChange={(e, newValue) =>
-                setFilters({ ...filters, priceRange: newValue })
-              }
-            />
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Service Type
-            </Typography>
-            {["buffet", "plated", "familyStyle"].map((type) => (
-              <FormControlLabel
-                key={type}
-                control={
-                  <Checkbox
-                    checked={filters.serviceType[type]}
-                    onChange={(e) =>
-                      setFilters({
-                        ...filters,
-                        serviceType: {
-                          ...filters.serviceType,
-                          [type]: e.target.checked,
-                        },
-                      })
-                    }
-                  />
+          <Box>
+              {/* Location Filter */}
+              <TextField
+                fullWidth
+                label="Location"
+                variant="outlined"
+                size="small"
+                value={filters.location}
+                onChange={(e) =>
+                  setFilters({ ...filters, location: e.target.value })
                 }
-                label={type.charAt(0).toUpperCase() + type.slice(1)}
               />
-            ))}
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Dietary Preferences
-            </Typography>
-            {["vegan", "vegetarian", "nonVeg"].map((preference) => (
-              <FormControlLabel
-                key={preference}
-                control={
-                  <Checkbox
-                    checked={filters.dietaryPreferences[preference]}
-                    onChange={(e) =>
-                      setFilters({
-                        ...filters,
-                        dietaryPreferences: {
-                          ...filters.dietaryPreferences,
-                          [preference]: e.target.checked,
-                        },
-                      })
-                    }
-                  />
+
+              {/* Price Range */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Price Range
+              </Typography>
+              <Slider
+                value={filters.priceRange}
+                onChange={(_, newValue) =>
+                  setFilters({ ...filters, priceRange: newValue })
                 }
-                label={preference.charAt(0).toUpperCase() + preference.slice(1)}
+                valueLabelDisplay="auto"
+                min={1000}
+                max={10000}
               />
-            ))}
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Meal Type
-            </Typography>
-            {["lunch", "dinner", "breakfast"].map((meal) => (
-              <FormControlLabel
-                key={meal}
-                control={
-                  <Checkbox
-                    checked={filters.mealType[meal]}
-                    onChange={(e) =>
-                      setFilters({
-                        ...filters,
-                        mealType: {
-                          ...filters.mealType,
-                          [meal]: e.target.checked,
-                        },
-                      })
-                    }
-                  />
+
+              {/* Rating */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Rating
+              </Typography>
+              <Rating
+                value={filters.rating}
+                onChange={(_, newValue) =>
+                  setFilters({ ...filters, rating: newValue })
                 }
-                label={meal.charAt(0).toUpperCase() + meal.slice(1)}
+                precision={0.5}
               />
-            ))}
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Rating
-            </Typography>
-            <Rating
-              value={filters.rating}
-              onChange={(e, newValue) =>
-                setFilters({ ...filters, rating: newValue })
-              }
-            />
-          </Box>
+
+              {/* Type Filter */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Hospital Type
+              </Typography>
+              {["Government", "Private", "Multi-specialty"].map((type) => (
+                <FormControlLabel
+                  key={type}
+                  control={
+                    <Checkbox
+                      checked={filters.type.includes(type)}
+                      onChange={() => handleCheckboxChange("type", type)}
+                    />
+                  }
+                  label={type}
+                />
+              ))}
+
+              {/* Facilities */}
+              <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                Facilities
+              </Typography>
+              {["ICU", "Emergency", "Pharmacy", "Parking"].map((facility) => (
+                <FormControlLabel
+                  key={facility}
+                  control={
+                    <Checkbox
+                      checked={filters.facilities.includes(facility)}
+                      onChange={() =>
+                        handleCheckboxChange("facilities", facility)
+                      }
+                    />
+                  }
+                  label={facility}
+                />
+              ))}
+            </Box>
         </Box>
 
         {/* Hostel List Section */}
@@ -567,7 +445,7 @@ export default function HospitalDetails() {
             </Tabs>
           </Box>
           <Grid container spacing={3}>
-            {paginatedCatering.map((item) => (
+            {filteredHospitals.map((item) => (
               <Grid item xs={12} md={6} lg={4} key={item.id}>
                 <Card>
                   <CardMedia
@@ -611,7 +489,7 @@ export default function HospitalDetails() {
           </Grid>
           <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
             <Pagination
-              count={Math.ceil(filteredCatering.length / itemsPerPage)}
+              count={Math.ceil(filteredHospitals.length / hospitalsPerPage)}
               page={page}
               onChange={(e, value) => setPage(value)}
             />
