@@ -13,10 +13,10 @@ const AdminDashboard = () => {
 
   // Mock Data
   const counters = [
-    { label: "Total Revenue", value: "$120,000" },
+    { label: "Total Revenue", value: "₹120,000" },
     { label: "Total Bookings", value: "3,200" },
-    { label: "Daily Revenue", value: "$3,200" },
-    { label: "Monthly Revenue", value: "$45,000" },
+    { label: "Daily Revenue", value: "₹3,200" },
+    { label: "Monthly Revenue", value: "₹45,000" },
     { label: "Customer Satisfaction", value: "92%" },
     { label: "Pending Approvals", value: "120" },
   ];
@@ -37,9 +37,9 @@ const AdminDashboard = () => {
   const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 
   const tableData = [
-    { id: 1, category: "Hostels", revenue: "$1,200", bookings: 12 },
-    { id: 2, category: "Hospitals", revenue: "$3,400", bookings: 30 },
-    { id: 3, category: "Garages", revenue: "$800", bookings: 8 },
+    { id: 1, category: "Hostels", revenue: "₹1,200", bookings: 12 },
+    { id: 2, category: "Hospitals", revenue: "₹3,400", bookings: 30 },
+    { id: 3, category: "Garages", revenue: "₹800", bookings: 8 },
   ];
 
   return (
@@ -152,7 +152,7 @@ const AdminDashboard = () => {
                     label
                   >
                     {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                      <Cell key={`cell-₹{index}`} fill={colors[index % colors.length]} />
                     ))}
                   </Pie>
                 </PieChart>
