@@ -15,7 +15,7 @@ import FashionDesignDetails from "./FrontWebsite/Views/AllAppointmentDetails/Fas
 import GarageDetails from "./FrontWebsite/Views/AllAppointmentDetails/GarageDetails.jsx";
 import ProfessionalServicesDetails from "./FrontWebsite/Views/AllAppointmentDetails/ProfessionalServicesDetails.jsx";
 import BeautyTattooDetails from "./FrontWebsite/Views/AllAppointmentDetails/BeautyTattooDetails.jsx";
-import AdminDashboard from "./AdminDashboard/Views/Dashboards/AdminDashboard.jsx";
+import AdminDashboard from "./Dashboards/Views/AdminDashboards/AdminDashboard.jsx";
 
 var hist = createBrowserHistory();
 export default function MainRoutes() {
