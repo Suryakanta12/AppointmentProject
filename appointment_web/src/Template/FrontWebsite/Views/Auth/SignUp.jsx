@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -8,11 +8,29 @@ import {
   Grid,
   Link,
   Avatar,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  Checkbox,
+  FormGroup,
 } from "@mui/material";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 
 const SignUp = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [accountType, setAccountType] = useState("user");
+  const [gender, setGender] = useState("");
+  const [businessTypes, setBusinessTypes] = useState([]);
+
+  const handleBusinessTypeChange = (event) => {
+    const { value, checked } = event.target;
+    setBusinessTypes((prev) =>
+      checked ? [...prev, value] : prev.filter((type) => type !== value),
+    );
+  };
+
   return (
     <Box
       sx={{
@@ -24,6 +42,7 @@ const SignUp = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed", // ✅ Keeps the background fixed while scrolling
         padding: 2,
       }}
     >
@@ -38,12 +57,7 @@ const SignUp = () => {
         }}
       >
         {/* Logo Section */}
-        <Box
-          sx={{
-            textAlign: "center",
-            mb: 4,
-          }}
-        >
+        <Box textAlign="center" mb={4}>
           <Avatar
             sx={{
               backgroundColor: "primary.main",
@@ -64,7 +78,24 @@ const SignUp = () => {
           </Typography>
         </Box>
 
-        {/* Form Section */}
+        {/* Account Type Selection */}
+        <FormControl component="fieldset" sx={{ mb: 2 }}>
+          <FormLabel component="legend">Sign Up As</FormLabel>
+          <RadioGroup
+            row
+            value={accountType}
+            onChange={(e) => setAccountType(e.target.value)}
+          >
+            <FormControlLabel value="user" control={<Radio />} label="User" />
+            <FormControlLabel
+              value="business"
+              control={<Radio />}
+              label="Business"
+            />
+          </RadioGroup>
+        </FormControl>
+
+        {/* Form Fields */}
         <Box component="form">
           <TextField
             fullWidth
@@ -72,11 +103,19 @@ const SignUp = () => {
             variant="outlined"
             margin="normal"
             required
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 2,
-              },
-            }}
+          />
+          <TextField
+            fullWidth
+            label="Phone Number"
+            variant="outlined"
+            margin="normal"
+            required
+          />
+          <TextField
+            fullWidth
+            label="Alternate Phone Number"
+            variant="outlined"
+            margin="normal"
           />
           <TextField
             fullWidth
@@ -84,11 +123,6 @@ const SignUp = () => {
             variant="outlined"
             margin="normal"
             required
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 2,
-              },
-            }}
           />
           <TextField
             fullWidth
@@ -97,11 +131,6 @@ const SignUp = () => {
             variant="outlined"
             margin="normal"
             required
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 2,
-              },
-            }}
           />
           <TextField
             fullWidth
@@ -110,86 +139,141 @@ const SignUp = () => {
             variant="outlined"
             margin="normal"
             required
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 2,
-              },
-            }}
           />
+
+          {/* Date of Birth */}
+          <TextField
+            fullWidth
+            type="date"
+            label="Date of Birth"
+            variant="outlined"
+            margin="normal"
+            InputLabelProps={{ shrink: true }}
+            required
+          />
+
+          {/* Occupation */}
+          <TextField
+            fullWidth
+            label="Occupation"
+            variant="outlined"
+            margin="normal"
+            required
+          />
+
+          {/* Gender Selection */}
+          <FormControl component="fieldset" sx={{ mt: 2 }}>
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup
+              row
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel
+                value="other"
+                control={<Radio />}
+                label="Other"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          {/* Business Fields - Show only if Business is selected */}
+          {accountType === "business" && (
+            <>
+              <TextField
+                fullWidth
+                label="Brand Name"
+                variant="outlined"
+                margin="normal"
+                required
+              />
+              <FormControl component="fieldset" sx={{ mt: 2 }}>
+                <FormLabel component="legend">Business Type</FormLabel>
+                <FormGroup row>
+                  {[
+                    "Hostel",
+                    "Hospital",
+                    "Garage",
+                    "BeautyTattoo",
+                    "FoodCatering",
+                    "FashionDesign",
+                    "ProfessionalServices",
+                    "Room Rent",
+                  ].map((type) => (
+                    <FormControlLabel
+                      key={type}
+                      control={
+                        <Checkbox
+                          checked={businessTypes.includes(type)}
+                          onChange={handleBusinessTypeChange}
+                          value={type}
+                        />
+                      }
+                      label={type}
+                    />
+                  ))}
+                </FormGroup>
+              </FormControl>
+              <TextField
+                fullWidth
+                label="State"
+                variant="outlined"
+                margin="normal"
+                required
+              />
+              <TextField
+                fullWidth
+                label="District"
+                variant="outlined"
+                margin="normal"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Pin Code"
+                variant="outlined"
+                margin="normal"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Address"
+                variant="outlined"
+                margin="normal"
+                multiline
+                rows={2}
+                required
+              />
+            </>
+          )}
+
           <Button
             fullWidth
             variant="contained"
             color="primary"
             size="large"
-            sx={{
-              borderRadius: 2,
-              textTransform: "none",
-              py: 1.5,
-              fontSize: "1rem",
-              mt: 2,
-            }}
+            sx={{ mt: 2 }}
           >
             Sign Up
           </Button>
         </Box>
 
-        {/* Divider */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            my: 3,
-          }}
-        >
-          <Box sx={{ flexGrow: 1, height: "1px", backgroundColor: "#e0e0e0" }} />
-          <Typography variant="body2" sx={{ px: 2, color: "grey.600" }}>
-            OR
-          </Typography>
-          <Box sx={{ flexGrow: 1, height: "1px", backgroundColor: "#e0e0e0" }} />
-        </Box>
-
-        {/* Social Sign-Up Buttons */}
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <Button
-              fullWidth
-              variant="outlined"
-              color="secondary"
-              size="large"
-              sx={{
-                textTransform: "none",
-                borderRadius: 2,
-              }}
-            >
-              Sign up with Google
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Button
-              fullWidth
-              variant="outlined"
-              color="secondary"
-              size="large"
-              sx={{
-                textTransform: "none",
-                borderRadius: 2,
-              }}
-            >
-              Sign up with Facebook
-            </Button>
-          </Grid>
-        </Grid>
-
         {/* Login Redirect */}
-        <Box
-          sx={{
-            mt: 3,
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="body2" color="grey.700">
+        <Box textAlign="center" mt={3}>
+          <Typography variant="body2">
             Already have an account?{" "}
-            <Link onClick={()=>navigate("/SignIn")} underline="hover" color="primary" sx={{ cursor: "pointer" }}>
+            <Link
+              onClick={() => navigate("/SignIn")}
+              underline="hover"
+              color="primary"
+              sx={{ cursor: "pointer" }}
+            >
               Sign in here
             </Link>
           </Typography>
